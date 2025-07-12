@@ -5,8 +5,8 @@ export const metadata = {
   icons: {
     icon: '/images/logo-black-main.ico',
   },
-  title: 'Nextbase Open source',
-  description: 'Nextbase Open source',
+  title: 'shimshon.ai',
+  description: 'AI-powered project management and collaboration platform',
 };
 
 export default async function RootLayout({

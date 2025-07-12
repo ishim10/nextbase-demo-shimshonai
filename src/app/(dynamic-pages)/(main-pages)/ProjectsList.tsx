@@ -1,4 +1,5 @@
 import { T } from '@/components/ui/Typography';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -16,67 +17,75 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { Table as TableType } from '@/types';
-import { Clock, ExternalLink, PlusCircle } from 'lucide-react';
+import { Clock, ExternalLink, Lock, PlusCircle } from 'lucide-react';
 import Link from 'next/link';
 
-interface ItemsListProps {
-  items: TableType<'items'>[];
+interface ProjectsListProps {
+  projects: TableType<'private_items'>[];
   showActions?: boolean;
 }
 
-export const ItemsList = ({ items, showActions = true }: ItemsListProps) => {
+export const ProjectsList = ({
+  projects,
+  showActions = true,
+}: ProjectsListProps) => {
   return (
     <div className="space-y-8">
       {showActions && (
         <div className="flex justify-between items-center">
           <div className="space-y-1">
-            <T.H2>Public Items</T.H2>
+            <div className="flex items-center gap-2">
+              <T.H2>Projects</T.H2>
+              <Badge variant="outline" className="h-6 flex items-center gap-1">
+                <Lock className="h-3 w-3" /> Secure
+              </Badge>
+            </div>
             <T.Subtle>
-              This is an open database. Items are automatically cleared every 24
-              hours.
+              These projects are only visible to logged in users
             </T.Subtle>
           </div>
-          <Link href="/new">
+          <Link href="/projects/new">
             <Button className="flex items-center gap-2">
-              <PlusCircle className="h-4 w-4" /> New Item
+              <PlusCircle className="h-4 w-4" /> Create New Project
             </Button>
           </Link>
         </div>
       )}
 
-      {items.length ? (
+      {projects.length ? (
         <Card className="shadow-sm border-muted/40">
           <Table>
             <TableHeader>
               <TableRow>
                 <TableHead className="w-[300px]">Name</TableHead>
-                <TableHead className="hidden md:table-cell">
-                  Description
-                </TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead>Last Updated</TableHead>
                 <TableHead className="text-right">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {items.map((item) => (
-                <TableRow key={item.id}>
-                  <TableCell className="font-medium">
-                    {item.name}
-                    {item.created_at && (
-                      <div className="flex items-center gap-1 mt-1 text-muted-foreground text-xs">
-                        <Clock className="h-3 w-3" />
-                        <span>
-                          {new Date(item.created_at).toLocaleDateString()}
-                        </span>
-                      </div>
-                    )}
+              {projects.map((project) => (
+                <TableRow key={project.id}>
+                  <TableCell className="font-medium">{project.name}</TableCell>
+                  <TableCell>
+                    <Badge
+                      variant={
+                        project.status === 'Active' ? 'default' : 'secondary'
+                      }
+                    >
+                      {project.status}
+                    </Badge>
                   </TableCell>
-                  <TableCell className="hidden md:table-cell text-muted-foreground">
-                    {item.description.length > 100
-                      ? `${item.description.slice(0, 100)}...`
-                      : item.description}
+                  <TableCell className="text-muted-foreground">
+                    <div className="flex items-center gap-1">
+                      <Clock className="h-3 w-3" />
+                      <span>
+                        {new Date(project.updated_at).toLocaleDateString()}
+                      </span>
+                    </div>
                   </TableCell>
                   <TableCell className="text-right">
-                    <Link href={`/item/${item.id}`}>
+                    <Link href={`/projects/${project.id}`}>
                       <Button
                         size="sm"
                         variant="outline"
@@ -94,15 +103,15 @@ export const ItemsList = ({ items, showActions = true }: ItemsListProps) => {
       ) : (
         <Card className="border-dashed">
           <CardHeader>
-            <CardTitle>No Items Available</CardTitle>
+            <CardTitle>No Projects Available</CardTitle>
             <CardDescription>
-              There are no items in the database. Create your first item!
+              You haven't created any projects yet. Create your first one!
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <Link href="/new">
+            <Link href="/projects/new">
               <Button className="flex items-center gap-2">
-                <PlusCircle className="h-4 w-4" /> Create Your First Item
+                <PlusCircle className="h-4 w-4" /> Create Your First Project
               </Button>
             </Link>
           </CardContent>

@@ -65,7 +65,7 @@ export const CreatePrivateItemForm: React.FC = () => {
       toastRef.current = undefined;
       router.refresh();
       if (data) {
-        router.push(`/private-item/${data}`);
+        router.push(`/projects/${data}`);
       }
     },
     onError: ({ error }) => {
@@ -91,11 +91,11 @@ export const CreatePrivateItemForm: React.FC = () => {
           <div className="flex items-center gap-2">
             <Shield className="h-5 w-5 text-primary" />
             <CardTitle>
-              <T.H2>Create Private Item</T.H2>
+              <T.H2>Create Project</T.H2>
             </CardTitle>
           </div>
           <CardDescription>
-            This item will be private and only visible to you when logged in
+            This project will be private and only visible to you when logged in
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -137,8 +137,8 @@ export const CreatePrivateItemForm: React.FC = () => {
                 disabled={status === 'executing' || !form.formState.isValid}
               >
                 {status === 'executing'
-                  ? 'Creating Item...'
-                  : 'Create Private Item'}
+                  ? 'Creating Project...'
+                  : 'Create Project'}
               </Button>
             </form>
           </Form>

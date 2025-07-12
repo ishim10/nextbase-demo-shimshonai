@@ -32,17 +32,17 @@ export const ConfirmDeleteItemDialog = ({ itemId }: Props): JSX.Element => {
 
   const { execute, status } = useAction(deletePrivateItemAction, {
     onExecute: () => {
-      toastRef.current = toast.loading('Deleting item...');
+      toastRef.current = toast.loading('Deleting project...');
     },
     onSuccess: () => {
-      toast.success('Item deleted', { id: toastRef.current });
+      toast.success('Project deleted', { id: toastRef.current });
       toastRef.current = undefined;
       router.refresh();
       router.push('/');
       setOpen(false);
     },
     onError: ({ error }) => {
-      const errorMessage = error.serverError ?? 'Failed to delete item';
+      const errorMessage = error.serverError ?? 'Failed to delete project';
       toast.error(errorMessage, { id: toastRef.current });
       toastRef.current = undefined;
     },

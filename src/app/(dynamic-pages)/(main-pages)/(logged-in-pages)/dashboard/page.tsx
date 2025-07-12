@@ -8,43 +8,47 @@ import { getAllPrivateItems } from '@/data/anon/privateItems';
 import { PlusCircle } from 'lucide-react';
 import Link from 'next/link';
 import { Suspense } from 'react';
-import { ItemsList } from '../../ItemsList';
-import { PrivateItemsList } from '../../PrivateItemsList';
+import { ProjectsList } from '../../ProjectsList';
+import { PublicProjectsList } from '../../PublicProjectsList';
 
 export const dynamic = 'force-dynamic';
 
 async function ItemsListContainer() {
   const items = await getAllItems();
-  return <ItemsList items={items} showActions={false} />;
+  return <PublicProjectsList items={items} showActions={false} />;
 }
 
-async function PrivateItemsListContainer() {
-  const privateItems = await getAllPrivateItems();
-  return <PrivateItemsList privateItems={privateItems} showActions={false} />;
+async function ProjectsListContainer() {
+  const projects = await getAllPrivateItems();
+  return <ProjectsList projects={projects} showActions={false} />;
 }
 
-function ListSkeleton() {
+function DashboardSkeleton() {
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div className="space-y-2">
-          <Skeleton className="h-8 w-40" />
+          <Skeleton className="h-8 w-48" />
           <Skeleton className="h-4 w-64" />
         </div>
         <Skeleton className="h-10 w-32" />
       </div>
-
       <Card>
         <CardHeader>
-          <Skeleton className="h-6 w-full mb-2" />
-          <Skeleton className="h-4 w-3/4" />
+          <Skeleton className="h-6 w-32" />
         </CardHeader>
-        <CardContent className="space-y-2">
-          {Array(3)
-            .fill(0)
-            .map((_, i) => (
-              <Skeleton key={i} className="h-16 w-full" />
+        <CardContent>
+          <div className="space-y-4">
+            {Array.from({ length: 3 }).map((_, i) => (
+              <div key={i} className="flex justify-between items-center">
+                <div className="space-y-2">
+                  <Skeleton className="h-4 w-48" />
+                  <Skeleton className="h-3 w-32" />
+                </div>
+                <Skeleton className="h-8 w-16" />
+              </div>
             ))}
+          </div>
         </CardContent>
       </Card>
     </div>
@@ -53,31 +57,37 @@ function ListSkeleton() {
 
 export default function DashboardPage() {
   return (
-    <div className="container mx-auto py-6 space-y-8">
-      <div className="flex justify-between items-center">
-        <T.H1>Dashboard</T.H1>
-        <Link href="/dashboard/new">
-          <Button className="flex items-center gap-2">
-            <PlusCircle className="h-4 w-4" /> New Private Item
+    <div className="container mx-auto py-8">
+      <div className="mb-8">
+        <div className="flex items-center justify-between">
+          <div>
+            <T.H1>Dashboard</T.H1>
+            <T.Subtle>
+              Manage your projects and explore public projects
+            </T.Subtle>
+          </div>
+          <Button asChild>
+            <Link href="/projects/new" className="flex items-center gap-2">
+              <PlusCircle className="h-4 w-4" />
+              New Project
+            </Link>
           </Button>
-        </Link>
+        </div>
       </div>
 
-      <Tabs defaultValue="private" className="w-full">
-        <TabsList className="mb-4">
-          <TabsTrigger value="private">Private Items</TabsTrigger>
-          <TabsTrigger value="public">Public Items</TabsTrigger>
+      <Tabs defaultValue="public" className="space-y-6">
+        <TabsList>
+          <TabsTrigger value="public">Public Projects</TabsTrigger>
+          <TabsTrigger value="private">My Projects</TabsTrigger>
         </TabsList>
-
-        <TabsContent value="private" className="space-y-4">
-          <Suspense fallback={<ListSkeleton />}>
-            <PrivateItemsListContainer />
+        <TabsContent value="public" className="space-y-4">
+          <Suspense fallback={<DashboardSkeleton />}>
+            <ItemsListContainer />
           </Suspense>
         </TabsContent>
-
-        <TabsContent value="public" className="space-y-4">
-          <Suspense fallback={<ListSkeleton />}>
-            <ItemsListContainer />
+        <TabsContent value="private" className="space-y-4">
+          <Suspense fallback={<DashboardSkeleton />}>
+            <ProjectsListContainer />
           </Suspense>
         </TabsContent>
       </Tabs>

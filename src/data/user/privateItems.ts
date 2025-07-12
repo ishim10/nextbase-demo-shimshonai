@@ -15,7 +15,11 @@ export const insertPrivateItemAction = authActionClient
     const supabaseClient = createSupabaseClient();
     const { data, error } = await supabaseClient
       .from('private_items')
-      .insert(parsedInput)
+      .insert({
+        ...parsedInput,
+        status: 'Active',
+        updated_at: new Date().toISOString(),
+      })
       .select('*')
       .single();
 

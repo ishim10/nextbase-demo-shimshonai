@@ -29,6 +29,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { insertItemAction } from '@/data/anon/items';
 import { motion } from 'framer-motion';
+import { Shield } from 'lucide-react';
 
 const formSchema = z.object({
   name: z.string().min(1, 'Name is required'),
@@ -87,11 +88,14 @@ export const ClientPage: React.FC = () => {
     >
       <Card className="shadow-lg">
         <CardHeader>
-          <CardTitle>
-            <T.H2>Create New Item</T.H2>
-          </CardTitle>
+          <div className="flex items-center gap-2">
+            <Shield className="h-5 w-5 text-primary" />
+            <CardTitle>
+              <T.H2>Create New Project</T.H2>
+            </CardTitle>
+          </div>
           <CardDescription>
-            Add a new item to the public database
+            Add a new project to the public database
           </CardDescription>
         </CardHeader>
         <CardContent>

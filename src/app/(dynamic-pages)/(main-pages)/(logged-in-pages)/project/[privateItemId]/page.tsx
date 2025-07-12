@@ -8,31 +8,31 @@ import {
 import { Separator } from '@/components/ui/separator';
 import { Skeleton } from '@/components/ui/skeleton';
 import { T } from '@/components/ui/Typography';
-import { getItem } from '@/data/anon/items';
+import { getPrivateItem } from '@/data/anon/privateItems';
 import { ArrowLeft, Calendar, Info } from 'lucide-react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
 import { ConfirmDeleteItemDialog } from './ConfirmDeleteItemDialog';
 
-async function Item({ itemId }: { itemId: string }) {
-  const item = await getItem(itemId);
+async function Project({ privateItemId }: { privateItemId: string }) {
+  const project = await getPrivateItem(privateItemId);
 
   return (
-    <Card className="shadow-md border-t-4 border-t-blue-500">
+    <Card className="shadow-md border-t-4 border-t-primary">
       <CardHeader className="pb-2">
         <div className="flex justify-between items-start">
           <Link
-            href="/"
-            className="text-sm text-muted-foreground hover:text-blue-500 flex items-center gap-1 mb-4"
+            href="/dashboard"
+            className="text-sm text-muted-foreground hover:text-primary flex items-center gap-1 mb-4"
           >
-            <ArrowLeft className="h-4 w-4" /> <span>Back to home</span>
+            <ArrowLeft className="h-4 w-4" /> <span>Back to dashboard</span>
           </Link>
         </div>
-        <T.H2 className="mb-1">{item.name}</T.H2>
+        <T.H2 className="mb-1">{project.name}</T.H2>
         <div className="flex items-center gap-1 text-muted-foreground text-sm">
           <Info className="h-3 w-3" />
-          <span>Public Item</span>
+          <span>Project</span>
         </div>
       </CardHeader>
       <Separator />
@@ -40,14 +40,14 @@ async function Item({ itemId }: { itemId: string }) {
         <div className="space-y-4">
           <div>
             <T.Small className="text-muted-foreground">Description</T.Small>
-            <T.P className="mt-1">{item.description}</T.P>
+            <T.P className="mt-1">{project.description}</T.P>
           </div>
 
-          {item.created_at && (
+          {project.created_at && (
             <div className="flex items-center gap-1 text-muted-foreground text-sm">
               <Calendar className="h-3 w-3" />
               <span>
-                Created on {new Date(item.created_at).toLocaleDateString()}
+                Created on {new Date(project.created_at).toLocaleDateString()}
               </span>
             </div>
           )}
@@ -55,16 +55,16 @@ async function Item({ itemId }: { itemId: string }) {
       </CardContent>
       <CardFooter className="flex justify-between border-t pt-4">
         <Button variant="outline" asChild>
-          <Link href="/dashboard">Back to Home</Link>
+          <Link href="/dashboard">Back to Dashboard</Link>
         </Button>
-        <ConfirmDeleteItemDialog itemId={itemId} />
+        <ConfirmDeleteItemDialog itemId={privateItemId} />
       </CardFooter>
     </Card>
   );
 }
 
 // Loading skeleton component
-function ItemSkeleton() {
+function ProjectSkeleton() {
   return (
     <Card className="shadow-md">
       <CardHeader className="pb-2">
@@ -92,19 +92,19 @@ function ItemSkeleton() {
   );
 }
 
-export default async function ItemPage(props: {
+export default async function ProjectPage(props: {
   params: Promise<{
-    itemId: string;
+    privateItemId: string;
   }>;
 }) {
   const params = await props.params;
-  const { itemId } = params;
+  const { privateItemId } = params;
 
   try {
     return (
       <div className="container mx-auto max-w-2xl py-8">
-        <Suspense fallback={<ItemSkeleton />}>
-          <Item itemId={itemId} />
+        <Suspense fallback={<ProjectSkeleton />}>
+          <Project privateItemId={privateItemId} />
         </Suspense>
       </div>
     );

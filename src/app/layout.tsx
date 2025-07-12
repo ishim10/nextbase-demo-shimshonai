@@ -17,8 +17,8 @@ const roboto_mono = Roboto_Mono({
 });
 
 export const metadata = {
-  title: 'Nextbase Open source starter',
-  description: 'Built with Next.js, Supabase, and Tailwind CSS',
+  title: 'shimshon.ai',
+  description: 'AI-powered project management and collaboration platform',
 };
 
 export default async function RootLayout({
