@@ -1,5 +1,6 @@
 import { Button } from '@/components/Button';
 import { Label } from '@/components/ui/label';
+import { REGISTRATION_CLOSED } from '@/constants';
 import { classNames } from '@/utils/classNames';
 import type { PropsOf } from '@headlessui/react/dist/types';
 import Link from 'next/link';
@@ -114,7 +115,7 @@ export const EmailAndPassword = ({
             {view === 'sign-in' ? (
               <div className="text-sm">
                 <Link
-                  href="/sign-up"
+                  href={REGISTRATION_CLOSED ? "/registration-closed" : "/sign-up"}
                   className="font-medium text-muted-foreground hover:text-foreground"
                 >
                   Don't have an account? Sign up

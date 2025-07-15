@@ -7,6 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import { REGISTRATION_CLOSED } from '@/constants';
 import { Check } from 'lucide-react';
 import Link from 'next/link';
 
@@ -49,7 +50,7 @@ export default function PricingPage() {
               </li>
             </ul>
             <Button className="w-full" variant="outline" asChild>
-              <Link href="/sign-up">Get Started</Link>
+              <Link href={REGISTRATION_CLOSED ? "/registration-closed" : "/sign-up"}>Get Started</Link>
             </Button>
           </CardContent>
         </Card>
@@ -95,7 +96,7 @@ export default function PricingPage() {
               </li>
             </ul>
             <Button className="w-full" asChild>
-              <Link href="/sign-up">Start Pro Trial</Link>
+              <Link href={REGISTRATION_CLOSED ? "/registration-closed" : "/sign-up"}>Start Pro Trial</Link>
             </Button>
           </CardContent>
         </Card>

@@ -3,6 +3,7 @@ import { ArrowLeftIcon, Fingerprint, MailIcon } from 'lucide-react';
 
 import type React from 'react';
 
+import { REGISTRATION_CLOSED } from '@/constants';
 import { useRouter } from 'next/navigation';
 import { Button } from '../ui/button';
 import {
@@ -50,8 +51,8 @@ export function EmailConfirmationPendingCard({
                 type === 'login'
                   ? '/login'
                   : type === 'sign-up'
-                  ? '/sign-up'
-                  : '/login'
+                    ? (REGISTRATION_CLOSED ? '/registration-closed' : '/sign-up')
+                    : '/login'
               );
             }}
           >
