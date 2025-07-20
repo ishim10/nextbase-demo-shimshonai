@@ -5,13 +5,13 @@ const Footer = () => {
         <div className="flex flex-col items-center justify-center py-8">
           <div className="flex flex-wrap justify-center gap-8 text-sm">
             <a
-              href="/privacy"
+              href="#"
               className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:underline"
             >
               Privacy Policy
             </a>
             <a
-              href="/terms"
+              href="#"
               className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:underline"
             >
               Terms & Conditions
@@ -23,7 +23,7 @@ const Footer = () => {
               Contact Us
             </a>
             <a
-              href="/support"
+              href="#"
               className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:underline"
             >
               Support

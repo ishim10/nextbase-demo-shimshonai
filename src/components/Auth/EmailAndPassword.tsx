@@ -36,7 +36,7 @@ export const EmailAndPassword = ({
           </Label>
           <div className="mt-1">
             <input
-              id={`${view}-email`}
+              id="email"
               name="email"
               type="email"
               disabled={isLoading}
@@ -56,7 +56,7 @@ export const EmailAndPassword = ({
           </Label>
           <div className="mt-1">
             <input
-              id={`${view}-password`}
+              id="password"
               name="password"
               type="password"
               disabled={isLoading}
