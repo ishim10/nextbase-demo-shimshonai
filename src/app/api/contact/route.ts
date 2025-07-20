@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
     });
 
     return NextResponse.json({ success: true });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Contact API error:', error);
     return NextResponse.json({ error: 'Failed to send message.' }, { status: 500 });
   }
